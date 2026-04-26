@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 
 type Props = {
@@ -20,6 +20,15 @@ export default function Uploader({ onSelect, onClear }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
+  // 컴포넌트 unmount 시 카메라 스트림 정리
+  useEffect(() => {
+    const video = videoRef.current
+    return () => {
+      const stream = video?.srcObject as MediaStream | null
+      stream?.getTracks().forEach((track) => track.stop())
+    }
+  }, [])
+
   const startCamera = async () => {
     setCameraError(false)
     setStreaming(false)
@@ -32,7 +41,6 @@ export default function Uploader({ onSelect, onClear }: Props) {
         videoRef.current.srcObject = stream
         videoRef.current.onloadedmetadata = () => {
           setStreaming(true)
-          console.log('Camera started successfully')
         }
       }
     } catch (err) {
@@ -91,6 +99,8 @@ export default function Uploader({ onSelect, onClear }: Props) {
     }
 
     reader.readAsDataURL(file)
+    // 같은 파일 재선택 가능하도록 input 값 초기화
+    e.target.value = ''
   }
 
   const takePhoto = () => {
@@ -150,7 +160,7 @@ export default function Uploader({ onSelect, onClear }: Props) {
         <>
           <button
             onClick={() => toggleMode('camera')}
-            className="mb-3 inline-flex items-center space-x-1.5 px-4 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 rounded-full transition"
+            className="mb-3 inline-flex items-center space-x-1.5 px-4 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#C2185B] rounded-full transition"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -176,10 +186,10 @@ export default function Uploader({ onSelect, onClear }: Props) {
           <div className="mx-auto w-full text-center max-w-[360px] overflow-hidden bg-gray-50 border border-gray-200 rounded-2xl px-4 py-5">
             <label
               htmlFor="file-upload"
-              className={`cursor-pointer px-4 py-2 rounded-md transition text-sm ${
+              className={`cursor-pointer px-4 py-2 rounded-lg transition text-sm font-medium ${
                 uploadedFileName
-                  ? 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                  : 'bg-amber-200 text-gray-800 hover:bg-amber-300'
+                  ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  : 'bg-[#FCE4EC] text-[#C2185B] hover:bg-[#F8BBD0]'
               }`}
             >
               {uploadedFileName ? '📂 다른 사진 선택' : '📁 앨범에서 사진 선택'}
@@ -200,7 +210,7 @@ export default function Uploader({ onSelect, onClear }: Props) {
           {uploadedFileName && (
             <div className="mt-3 text-xs text-gray-700 text-center">
               {uploadedPreview && (
-                <div className="relative w-full max-w-xs mx-auto aspect-square rounded border overflow-hidden">
+                <div className="relative w-full max-w-xs mx-auto aspect-square rounded-xl border border-gray-200 overflow-hidden">
                   <Image
                     src={uploadedPreview}
                     alt="업로드 미리보기"
@@ -225,7 +235,7 @@ export default function Uploader({ onSelect, onClear }: Props) {
         <>
           <button
             onClick={() => toggleMode('upload')}
-            className="mb-3 inline-flex items-center space-x-1.5 px-4 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 rounded-full transition"
+            className="mb-3 inline-flex items-center space-x-1.5 px-4 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#C2185B] rounded-full transition"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -244,7 +254,7 @@ export default function Uploader({ onSelect, onClear }: Props) {
             <span>가지고 있는 사진으로 꾸미기</span>
           </button>
           <div className="mx-auto w-full max-w-[360px] overflow-hidden bg-gray-50 border border-gray-200 rounded-2xl px-4 py-5">
-            <div className="relative w-full max-w-xs mx-auto aspect-square bg-black rounded overflow-hidden">
+            <div className="relative w-full max-w-xs mx-auto aspect-square bg-black rounded-xl overflow-hidden">
               {!captured && !cameraError && (
                 <video
                   ref={videoRef}
@@ -296,7 +306,7 @@ export default function Uploader({ onSelect, onClear }: Props) {
                 {!captured && streaming && !cameraError && (
                   <button
                     onClick={takePhoto}
-                    className="px-5 py-3 rounded-full bg-[#415E9A] text-white text-sm hover:bg-[#84C0D3] shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                    className="px-5 py-3 rounded-full bg-[#C2185B] text-white text-sm hover:bg-[#880E4F] shadow-lg focus:outline-none focus:ring-2 focus:ring-[#F48FB1] focus:ring-opacity-75"
                     aria-label="사진 촬영"
                   >
                     <svg
@@ -324,7 +334,7 @@ export default function Uploader({ onSelect, onClear }: Props) {
                 {captured && (
                   <button
                     onClick={handleRetake}
-                    className="p-3 rounded-full bg-gray-600 text-white hover:bg-[#e1a8bd] shadow focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75"
+                    className="p-3 rounded-full bg-gray-600 text-white hover:bg-[#F48FB1] shadow focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75"
                     aria-label="다시 찍기"
                   >
                     <svg

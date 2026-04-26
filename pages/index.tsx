@@ -10,7 +10,7 @@ import { supabase } from '@/lib/supabase'
 export default function Home() {
   const [step, setStep] = useState<0 | 1 | 2>(0)
   const [image, setImage] = useState<File | null>(null)
-  const [overlayFile, setOverlayFile] = useState('asset01.png')
+  const [overlayFile, setOverlayFile] = useState('517asset-00.png')
   const [isInAppBrowser, setIsInAppBrowser] = useState(false)
   const [referralSource, setReferralSource] = useState<string | null>(null)
 
@@ -23,8 +23,6 @@ export default function Home() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'instant' })
-      document.documentElement.scrollTop = 0
-      document.body.scrollTop = 0
     }, 100)
 
     return () => clearTimeout(timeout)
@@ -71,6 +69,10 @@ export default function Home() {
   return (
     <>
       <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
         <title>수호동지 프로필 꾸미기</title>
         <meta
           name="description"
@@ -103,15 +105,16 @@ export default function Home() {
         style={{ backgroundImage: "url('/bg.png')", minHeight: '100dvh' }}
       >
         <header className="sticky top-0 z-50 w-full">
-          <div className="max-w-[420px] mx-auto h-20 relative py-5 bg-white border-b border-[#E1A8BD]">
+          <div className="max-w-[420px] mx-auto h-20 relative py-5 bg-white border-b border-[#F48FB1]">
             <Image
               src="/logo.png"
-              alt="로고"
+              alt="무지개행동 로고"
               fill
+              priority
               className="object-contain cursor-pointer"
               onClick={() => {
                 setImage(null)
-                setOverlayFile('asset01.png')
+                setOverlayFile('517asset-00.png')
                 setStep(0)
               }}
             />
@@ -127,7 +130,7 @@ export default function Home() {
               {step === 0 ? (
                 <div className="text-center space-y-6">
                   {isInAppBrowser && (
-                    <p className="text-xs text-red-800 px-4 py-3 border border-red-300 bg-red-50 rounded-3xl animate-pulse">
+                    <p className="text-xs text-red-800 px-4 py-3 border border-red-300 bg-red-50 rounded-2xl animate-pulse">
                       ⚠️ 텔레그램, 인스타그램, 페이스북 등 일부 앱의 내부
                       브라우저에서는 이미지가 정상적으로 다운로드되지 않을 수
                       있습니다.
@@ -136,8 +139,8 @@ export default function Home() {
                       <strong>다시</strong> 접속해주세요.
                     </p>
                   )}
-                  <div className="bg-white border border-[#84C0D3] rounded-2xl px-6 py-8">
-                    <h1 className="text-xl font-bold text-[#415E9A] mb-2 ">
+                  <div className="bg-white border border-[#F48FB1] rounded-2xl px-6 py-8">
+                    <h1 className="text-xl font-bold text-[#C2185B] mb-2">
                       수호동지 프로필 꾸미기!
                     </h1>
                     <p className="text-sm text-gray-700 leading-relaxed">
@@ -161,15 +164,15 @@ export default function Home() {
                           setStep(1)
                         }
                       }}
-                      className="mt-6 px-5 py-2 text-white text-sm bg-[#415E9A] hover:bg-[#84C0D3] transition"
+                      className="mt-6 px-6 py-2.5 text-white text-sm font-semibold bg-[#C2185B] hover:bg-[#880E4F] rounded-lg transition"
                     >
-                      <strong>시작하기</strong>
+                      시작하기
                     </button>
                   </div>
 
-                  <p className="text-xs text-green-800 px-4 py-3 border border-green-300 bg-green-50 rounded-2xl">
+                  <p className="text-xs text-slate-500 px-4 py-3 border border-slate-200 bg-slate-50 rounded-2xl">
                     🔒 이미지는 브라우저에서만 처리되며, 서버에{' '}
-                    <strong>저장되지 않습니다.</strong>
+                    <strong className="text-slate-600">저장되지 않습니다.</strong>
                   </p>
                 </div>
               ) : step === 1 || !image ? (
@@ -187,7 +190,7 @@ export default function Home() {
                   setOverlayFile={setOverlayFile}
                   onReset={() => {
                     setImage(null)
-                    setOverlayFile('asset01.png')
+                    setOverlayFile('517asset-00.png')
                     setStep(1)
                   }}
                 />
@@ -197,9 +200,9 @@ export default function Home() {
         </main>
 
         {/* Footer */}
-        <footer className="w-full mt-auto">
+        <footer className="w-full mt-auto" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
           <div className="max-w-[420px] mx-auto text-center text-sm text-gray-400 bg-white pt-3">
-            <div className="w-full bg-[#F1F5FF] text-[#415E9A] leading-tight text-center py-4 px-4 border-t border-[#84C0D3] font-medium tracking-tight">
+            <div className="w-full bg-[#FFF5F8] text-[#C2185B] leading-tight text-center py-4 px-4 border-t border-[#F48FB1] font-medium tracking-tight">
               전체 캠페인 정보는{' '}
               <a
                 href="https://rainbowaction.kr"
@@ -211,7 +214,7 @@ export default function Home() {
               </a>
               에서 확인하실 수 있어요.
             </div>
-            <div className="w-full bg-[#F8E6ED] leading-tight text-center py-4 px-4 border-y border-[#e1a8bd] font-medium tracking-tight">
+            <div className="w-full bg-[#FCE4EC] leading-tight text-center py-4 px-4 border-y border-[#F48FB1] font-medium tracking-tight">
               <p className="text-gray-700">
                 <span className="text-black">
                   <strong>후원하기</strong>
