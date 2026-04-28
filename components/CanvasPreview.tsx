@@ -358,7 +358,7 @@ export default function CanvasPreview({
     }
 
     const file = new File([blob], 'rainbowaction-profile.png', { type: 'image/png' })
-    const shareUrl = 'https://profile.rainbowaction.kr/?ref=share'
+    const shareUrl = 'https://rainbowaction-517.vercel.app/?ref=share'
     const shareData = {
       files: [file],
       title: '5·17 성소수자 평등의 날 공동행동 평등위원 프로필',
