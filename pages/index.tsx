@@ -87,7 +87,11 @@ export default function Home() {
           property="og:image"
           content="https://profile.rainbowaction.kr/og-image.png"
         />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:url" content="https://profile.rainbowaction.kr/" />
+        <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="5·17 성소수자 평등의 날 공동행동 평등위원 프로필 꾸미기" />
         <meta
