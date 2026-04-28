@@ -1,5 +1,3 @@
-'use client'
-
 import CanvasPreview from '@/components/CanvasPreview'
 import { supabase } from '@/lib/supabase'
 import Image from 'next/image'

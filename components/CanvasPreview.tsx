@@ -361,8 +361,8 @@ export default function CanvasPreview({
     const shareUrl = 'https://profile.rainbowaction.kr/?ref=share'
     const shareData = {
       files: [file],
-      title: '나의 수호동지 프로필',
-      text: '나의 수호동지 프로필 이미지를 공유합니다!',
+      title: '5·17 성소수자 평등의 날 공동행동 평등위원 프로필',
+      text: '프로필 사진에 아이템을 추가해 성소수자 \'평등 실현\'과 \'권리 보장\'을 요구해주세요!',
       url: shareUrl,
     }
 

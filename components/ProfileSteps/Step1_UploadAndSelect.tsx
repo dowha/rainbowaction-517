@@ -1,5 +1,3 @@
-'use client'
-
 import Uploader from '@/components/Uploader'
 import { supabase } from '@/lib/supabase'
 import Image from 'next/image'
