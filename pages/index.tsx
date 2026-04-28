@@ -103,8 +103,8 @@ export default function Home() {
       </Head>
 
       <div
-        className="flex flex-col min-h-screen bg-center bg-cover bg-no-repeat"
-        style={{ backgroundImage: "url('/bg.png')", minHeight: '100dvh' }}
+        className="flex flex-col min-h-screen"
+        style={{ background: 'linear-gradient(160deg, #FFF8F0 0%, #FFF3E0 100%)', minHeight: '100dvh' }}
       >
         <header className="sticky top-0 z-50 w-full">
           <div className="max-w-[420px] mx-auto h-20 relative py-5 bg-[#EC6C00] border-b border-[#EC6C00]">
