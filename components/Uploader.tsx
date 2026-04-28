@@ -160,7 +160,7 @@ export default function Uploader({ onSelect, onClear }: Props) {
         <>
           <button
             onClick={() => toggleMode('camera')}
-            className="mb-3 inline-flex items-center space-x-1.5 px-4 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#C2185B] rounded-full transition"
+            className="mb-3 inline-flex items-center space-x-1.5 px-4 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#BD3108] rounded-full transition"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +189,7 @@ export default function Uploader({ onSelect, onClear }: Props) {
               className={`cursor-pointer px-4 py-2 rounded-lg transition text-sm font-medium ${
                 uploadedFileName
                   ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  : 'bg-[#FCE4EC] text-[#C2185B] hover:bg-[#F8BBD0]'
+                  : 'bg-[#FFE0B2] text-[#BD3108] hover:bg-[#FFD08A]'
               }`}
             >
               {uploadedFileName ? '📂 다른 사진 선택' : '📁 앨범에서 사진 선택'}
@@ -235,7 +235,7 @@ export default function Uploader({ onSelect, onClear }: Props) {
         <>
           <button
             onClick={() => toggleMode('upload')}
-            className="mb-3 inline-flex items-center space-x-1.5 px-4 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#C2185B] rounded-full transition"
+            className="mb-3 inline-flex items-center space-x-1.5 px-4 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#BD3108] rounded-full transition"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -306,7 +306,7 @@ export default function Uploader({ onSelect, onClear }: Props) {
                 {!captured && streaming && !cameraError && (
                   <button
                     onClick={takePhoto}
-                    className="px-5 py-3 rounded-full bg-[#C2185B] text-white text-sm hover:bg-[#880E4F] shadow-lg focus:outline-none focus:ring-2 focus:ring-[#F48FB1] focus:ring-opacity-75"
+                    className="px-5 py-3 rounded-full bg-[#BD3108] text-white text-sm hover:bg-[#8B2200] shadow-lg focus:outline-none focus:ring-2 focus:ring-[#F4A261] focus:ring-opacity-75"
                     aria-label="사진 촬영"
                   >
                     <svg
@@ -334,7 +334,7 @@ export default function Uploader({ onSelect, onClear }: Props) {
                 {captured && (
                   <button
                     onClick={handleRetake}
-                    className="p-3 rounded-full bg-gray-600 text-white hover:bg-[#F48FB1] shadow focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75"
+                    className="p-3 rounded-full bg-gray-600 text-white hover:bg-[#F4A261] shadow focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75"
                     aria-label="다시 찍기"
                   >
                     <svg

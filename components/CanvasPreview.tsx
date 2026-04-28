@@ -24,7 +24,7 @@ const ShareButton = ({ text, isSharing, onClick }: ShareButtonProps) => (
     type="button"
     onClick={onClick}
     disabled={isSharing}
-    className="block no-underline hover:no-underline w-full text-center px-4 py-2.5 text-sm text-white bg-[#C2185B] rounded-lg hover:bg-[#880E4F] transition border border-[#C2185B] disabled:opacity-60 disabled:cursor-wait"
+    className="block no-underline hover:no-underline w-full text-center px-4 py-2.5 text-sm text-white bg-[#BD3108] rounded-lg hover:bg-[#8B2200] transition border border-[#BD3108] disabled:opacity-60 disabled:cursor-wait"
   >
     <strong>{isSharing ? '공유 준비 중...' : text}</strong>
   </button>
@@ -440,7 +440,7 @@ export default function CanvasPreview({
             style={{ touchAction: 'manipulation' }}
           />
           {isDragging && (
-            <div className="absolute inset-0 border-2 border-[#C2185B] pointer-events-none rounded-lg opacity-75" />
+            <div className="absolute inset-0 border-2 border-[#BD3108] pointer-events-none rounded-lg opacity-75" />
           )}
         </div>
 
@@ -460,7 +460,7 @@ export default function CanvasPreview({
               step="0.05"
               value={scale}
               onChange={(e) => setScale(parseFloat(e.target.value))}
-              className="w-full h-6 accent-[#C2185B] touch-pan-y cursor-pointer"
+              className="w-full h-6 accent-[#BD3108] touch-pan-y cursor-pointer"
             />
           </div>
 
@@ -569,7 +569,7 @@ export default function CanvasPreview({
                     href={typeof window !== 'undefined' ? window.location.href : '/'}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="underline text-[#C2185B] font-medium"
+                    className="underline text-[#BD3108] font-medium"
                   >
                     외부 브라우저
                   </a>

@@ -73,15 +73,15 @@ export default function Home() {
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
-        <title>수호동지 프로필 꾸미기</title>
+        <title>5·17 성소수자 평등의 날 공동행동 평등위원 프로필 꾸미기</title>
         <meta
           name="description"
-          content="프로필 사진에 무지개 아이템을 추가해 성소수자에 대한 지지를 표현해주세요."
+          content="프로필 사진에 아이템을 추가해 성소수자 '평등 실현'과 '권리 보장'을 요구해주세요!"
         />
-        <meta property="og:title" content="수호동지 프로필 꾸미기" />
+        <meta property="og:title" content="5·17 성소수자 평등의 날 공동행동 평등위원 프로필 꾸미기" />
         <meta
           property="og:description"
-          content="프로필 사진에 무지개 아이템을 추가해 성소수자에 대한 지지를 표현해주세요."
+          content="프로필 사진에 아이템을 추가해 성소수자 '평등 실현'과 '권리 보장'을 요구해주세요!"
         />
         <meta
           property="og:image"
@@ -89,10 +89,10 @@ export default function Home() {
         />
         <meta property="og:url" content="https://profile.rainbowaction.kr/" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="수호동지 프로필 꾸미기" />
+        <meta name="twitter:title" content="5·17 성소수자 평등의 날 공동행동 평등위원 프로필 꾸미기" />
         <meta
           name="twitter:description"
-          content="프로필 사진에 무지개 아이템을 추가해 성소수자에 대한 지지를 표현해주세요."
+          content="프로필 사진에 아이템을 추가해 성소수자 '평등 실현'과 '권리 보장'을 요구해주세요!"
         />
         <meta
           name="twitter:image"
@@ -105,7 +105,7 @@ export default function Home() {
         style={{ backgroundImage: "url('/bg.png')", minHeight: '100dvh' }}
       >
         <header className="sticky top-0 z-50 w-full">
-          <div className="max-w-[420px] mx-auto h-20 relative py-5 bg-white border-b border-[#F48FB1]">
+          <div className="max-w-[420px] mx-auto h-20 relative py-5 bg-[#EC6C00] border-b border-[#EC6C00]">
             <Image
               src="/logo.png"
               alt="무지개행동 로고"
@@ -139,14 +139,14 @@ export default function Home() {
                       <strong>다시</strong> 접속해주세요.
                     </p>
                   )}
-                  <div className="bg-white border border-[#F48FB1] rounded-2xl px-6 py-8">
-                    <h1 className="text-xl font-bold text-[#C2185B] mb-2">
-                      수호동지 프로필 꾸미기!
+                  <div className="bg-white border border-[#F4A261] rounded-2xl px-6 py-8">
+                    <h1 className="text-xl font-bold text-[#BD3108] mb-2">
+                      5·17 성소수자 평등의 날<br />공동행동 평등위원 프로필 꾸미기!
                     </h1>
                     <p className="text-sm text-gray-700 leading-relaxed">
-                      프로필 사진에 무지개 아이템을 추가해
+                      프로필 사진에 아이템을 추가해
                       <br />
-                      성소수자에 대한 지지를 표현해주세요!
+                      성소수자 &apos;평등 실현&apos;과 &apos;권리 보장&apos;을 요구해주세요!
                     </p>
                     <button
                       onClick={async () => {
@@ -164,7 +164,7 @@ export default function Home() {
                           setStep(1)
                         }
                       }}
-                      className="mt-6 px-6 py-2.5 text-white text-sm font-semibold bg-[#C2185B] hover:bg-[#880E4F] rounded-lg transition"
+                      className="mt-6 px-6 py-2.5 text-white text-sm font-semibold bg-[#BD3108] hover:bg-[#8B2200] rounded-lg transition"
                     >
                       시작하기
                     </button>
@@ -202,35 +202,38 @@ export default function Home() {
         {/* Footer */}
         <footer className="w-full mt-auto" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
           <div className="max-w-[420px] mx-auto text-center text-sm text-gray-400 bg-white pt-3">
-            <div className="w-full bg-[#FFF5F8] text-[#C2185B] leading-tight text-center py-4 px-4 border-t border-[#F48FB1] font-medium tracking-tight">
+            <div className="w-full bg-[#FFF8F0] text-[#BD3108] leading-tight text-center py-4 px-4 border-t border-[#F4A261] font-medium tracking-tight">
               전체 캠페인 정보는{' '}
               <a
-                href="https://rainbowaction.kr"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSd9tFla7XcOAytg6l0nAoRkWYSqZTlTJDSqmPYynyIXRlqfng/viewform"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline underline-offset-2"
               >
-                <strong>무지개 수호대 페이지</strong>
+                <strong>&lt;5·17 성소수자 평등의 날&gt; 공동행동</strong>
               </a>
-              에서 확인하실 수 있어요.
+              에서
+              <br />
+              확인하실 수 있어요.
             </div>
-            <div className="w-full bg-[#FCE4EC] leading-tight text-center py-4 px-4 border-y border-[#F48FB1] font-medium tracking-tight">
+            <div className="w-full bg-[#FFE0B2] leading-tight text-center py-4 px-4 border-y border-[#F4A261] font-medium tracking-tight">
               <p className="text-gray-700">
                 <span className="text-black">
                   <strong>후원하기</strong>
                 </span>
                 <br />
                 <a
-                  href="https://aq.gy/f/2K1E%5E"
+                  href="https://donate.do/queer"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="underline underline-offset-2"
                 >
-                  국민은행 408801-01-317159 성소수자차별반대 무지개행동
+                  donate.do/queer
                 </a>
               </p>
             </div>
             <p className="py-2 text-sm text-black">
-              © {new Date().getFullYear()} 성소수자차별반대{' '}
+              © 2026 한국성소수자인권단체연합{' '}
               <a
                 href="mailto:contact@rainbowaction.kr"
                 className="text-black no-underline"

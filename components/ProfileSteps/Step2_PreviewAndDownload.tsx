@@ -71,7 +71,7 @@ export default function Step2_PreviewAndDownload({
                 onClick={() => setOverlayFile(asset)}
                 className={`flex flex-col items-center justify-center w-24 shrink-0 p-2 rounded-xl border text-xs transition ${
                   selected
-                    ? 'border-[#C2185B] bg-[#FFF0F5] text-[#C2185B] shadow-sm'
+                    ? 'border-[#BD3108] bg-[#FFF3E0] text-[#BD3108] shadow-sm'
                     : 'bg-white border-gray-200 hover:bg-gray-50 text-gray-700'
                 }`}
               >

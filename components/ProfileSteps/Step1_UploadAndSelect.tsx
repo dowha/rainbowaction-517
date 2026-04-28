@@ -62,7 +62,7 @@ export default function Step1_UploadAndSelect({
                   onClick={() => setOverlayFile(asset)}
                   className={`relative w-full h-28 rounded-xl border p-1 text-xs font-medium flex flex-col items-center justify-between text-center transition overflow-hidden ${
                     selected
-                      ? 'border-[#C2185B] bg-[#FFF0F5] text-gray-800 shadow-sm'
+                      ? 'border-[#BD3108] bg-[#FFF3E0] text-gray-800 shadow-sm'
                       : 'bg-white border-gray-200 hover:bg-gray-50 text-gray-700'
                   }`}
                 >
@@ -88,7 +88,7 @@ export default function Step1_UploadAndSelect({
                           e.stopPropagation() // 중요: 이벤트 버블링 방지
                           handleProceed()
                         }}
-                        className="px-4 py-1.5 bg-[#C2185B] bg-opacity-95 text-white text-xs rounded-full hover:bg-[#880E4F] transition shadow-md z-10"
+                        className="px-4 py-1.5 bg-[#BD3108] bg-opacity-95 text-white text-xs rounded-full hover:bg-[#8B2200] transition shadow-md z-10"
                       >
                         ✅ 꾸미기 시작하기
                       </button>
