@@ -1,18 +1,19 @@
-# 수호동지 프로필 꾸미기
+# 5·17 성소수자 평등의 날 공동행동 평등위원 프로필 꾸미기
 
-🌈 무지개 아이템으로 나만의 프로필 사진을 꾸며보세요!  
-[profile.rainbowaction.kr](https://profile.rainbowaction.kr)은 성소수자차별반대 무지개행동의 캠페인 페이지입니다.
+프로필 사진에 아이템을 추가해 성소수자 '평등 실현'과 '권리 보장'을 요구해주세요!
+
+[rainbowaction-517.vercel.app](https://rainbowaction-517.vercel.app)
 
 ## 주요 기능
 
 - 프로필 사진 업로드 또는 촬영
-- 무지개 아이템(스티커) 선택 및 위치 조절
+- 아이템(스티커) 선택 및 위치·크기·회전 조절
 - 완성된 이미지 다운로드 및 공유
 
 ## 제작자
 
 - 👤 [Dowha](https://dowha.kim)
-- 🌐 캠페인: [무지개행동 공식 사이트](https://rainbowaction.kr)
+- 🌐 캠페인: [한국성소수자인권단체연합 무지개행동](https://rainbowaction.kr)
 
 ## 라이선스
 
@@ -21,4 +22,4 @@
 모든 권리는 제작자에게 있습니다.  
 별도 사용이 필요한 경우 사전 문의 바랍니다.
 
-© 2025 성소수자차별반대 무지개행동. All rights reserved.
+© 2026 한국성소수자인권단체연합 무지개행동. All rights reserved.
