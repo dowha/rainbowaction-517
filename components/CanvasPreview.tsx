@@ -39,7 +39,7 @@ interface DownloadButtonProps {
 const DownloadButton = ({ downloadUrl, isSharing, onDownload }: DownloadButtonProps) => (
   <a
     href={downloadUrl}
-    download="517-equality-profile.png"
+    download="IDAHOBIT-profile.png"
     onClick={onDownload}
     className={`block no-underline hover:no-underline w-full text-center px-4 py-2.5 text-sm text-white bg-gray-800 rounded-lg hover:bg-gray-700 hover:text-white transition border border-gray-800 ${
       isSharing ? 'opacity-60 pointer-events-none' : 'cursor-pointer'
@@ -357,7 +357,7 @@ export default function CanvasPreview({
       return
     }
 
-    const file = new File([blob], '517-equality-profile.png', { type: 'image/png' })
+    const file = new File([blob], 'IDAHOBIT-profile.png', { type: 'image/png' })
     const shareUrl = 'https://rainbowaction-517.vercel.app/?ref=share'
     const shareData = {
       files: [file],
