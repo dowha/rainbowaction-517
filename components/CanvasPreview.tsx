@@ -563,7 +563,7 @@ export default function CanvasPreview({
                 {platformInfo.canShare && <ShareButton text="공유하기(사진첩 저장하기)" isSharing={isSharing} onClick={handleNativeShare} />}
                 <DownloadButton downloadUrl={downloadUrl} isSharing={isSharing} onDownload={onDownload} />
                 <p className="text-xs text-center text-gray-500 mt-3">
-                  일부 앱 내 브라우저에서는 다운로드가 제한될 수 있어요.
+                  일부 앱 내 브라우저에서는 다운로드 또는 공유가 제한될 수 있어요.
                   <br />
                   <a
                     href={typeof window !== 'undefined' ? window.location.href : '/'}
@@ -571,7 +571,7 @@ export default function CanvasPreview({
                     rel="noopener noreferrer"
                     className="underline text-[#BD3108] font-medium"
                   >
-                    외부 브라우저
+                    외부 브라우저(크롬, 사파리 등)
                   </a>
                   에서 다시 접속해주세요.
                 </p>
