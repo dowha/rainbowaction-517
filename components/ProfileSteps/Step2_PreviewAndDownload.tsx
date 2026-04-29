@@ -1,7 +1,7 @@
 import CanvasPreview from '@/components/CanvasPreview'
 import { supabase } from '@/lib/supabase'
 import Image from 'next/image'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState, useCallback } from 'react'
 import assetLabels from '@/lib/assetLabels'
 
 const labels = assetLabels
@@ -33,8 +33,19 @@ export default function Step2_PreviewAndDownload({
   }
 
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const [showLeftFade, setShowLeftFade] = useState(false)
+  const [showRightFade, setShowRightFade] = useState(true)
+
+  const updateFades = useCallback(() => {
+    const el = scrollContainerRef.current
+    if (!el) return
+    setShowLeftFade(el.scrollLeft > 4)
+    setShowRightFade(el.scrollLeft + el.clientWidth < el.scrollWidth - 4)
+  }, [])
 
   useEffect(() => {
+    updateFades()
     const timeout = setTimeout(() => {
       const selectedIndex = labels.findIndex(
         (_, i) => overlayFile === `517asset-${String(i).padStart(2, '0')}.png`
@@ -47,6 +58,7 @@ export default function Step2_PreviewAndDownload({
           block: 'nearest',
         })
       }
+      updateFades()
     }, 50)
 
     return () => clearTimeout(timeout)
@@ -55,7 +67,18 @@ export default function Step2_PreviewAndDownload({
 
   return (
     <div className="w-full">
-      <div className="overflow-x-auto pb-2 custom-scrollbar">
+      <div className="relative">
+        {showLeftFade && (
+          <div className="absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
+        )}
+        {showRightFade && (
+          <div className="absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
+        )}
+      <div
+        ref={scrollContainerRef}
+        onScroll={updateFades}
+        className="overflow-x-auto pb-2 custom-scrollbar"
+      >
         <div className="flex gap-3">
           {labels.map((label, i) => {
             const asset = `517asset-${String(i).padStart(2, '0')}.png`
@@ -89,6 +112,7 @@ export default function Step2_PreviewAndDownload({
             )
           })}
         </div>
+      </div>
       </div>
 
       <div className="mt-6">
