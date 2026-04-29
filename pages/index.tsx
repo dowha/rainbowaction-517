@@ -219,7 +219,7 @@ export default function Home() {
         <footer className="w-full mt-auto" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
           <div className="max-w-[420px] mx-auto text-center text-sm text-gray-400 bg-white pt-3">
             <div className="w-full bg-[#FFF8F0] text-[#BD3108] leading-tight text-center py-4 px-4 border-t border-[#F4A261] font-medium tracking-tight">
-              전체 캠페인 정보는{' '}
+              자세한 캠페인 정보는<br />
               <a
                 href="https://rainbowaction.kr/17?q=YToxOntzOjEyOiJrZXl3b3JkX3R5cGUiO3M6MzoiYWxsIjt9&bmode=view&idx=171064001&t=board"
                 target="_blank"
