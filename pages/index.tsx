@@ -29,31 +29,24 @@ export default function Home() {
   useEffect(() => {
     const ua = navigator.userAgent.toLowerCase()
     const inAppPatterns = [
-      'instagram',
-      'fbav',
-      'fb_iab',
-      'fban',
-      'twitter',
-      'tiktok',
-      'pinterest',
-      'reddit',
-      'linkedin',
-      'telegram',
-      'telegrambot',
-      'slack',
-      'line',
-      'kakaotalk',
-      'wechat',
-      'whatsapp',
-      'messenger',
-      'naver',
-      'daum',
-      'youtube',
-      'snapchat',
-      'discord',
+      'instagram', 'fbav', 'fb_iab', 'fban', 'twitter', 'tiktok',
+      'pinterest', 'reddit', 'linkedin', 'telegram', 'telegrambot',
+      'slack', 'line', 'kakaotalk', 'wechat', 'whatsapp', 'messenger',
+      'naver', 'daum', 'youtube', 'snapchat', 'discord',
     ]
-    const isInApp = inAppPatterns.some((pattern) => ua.includes(pattern))
-    setIsInAppBrowser(isInApp)
+    const uaMatch = inAppPatterns.some((pattern) => ua.includes(pattern))
+
+    // Telegram 인앱 브라우저는 UA에 식별자를 넣지 않아 감지 불가
+    // window.Telegram은 Mini App 컨텍스트에서만 주입됨
+    const win = window as Window & { Telegram?: unknown; TelegramWebviewProxy?: unknown }
+    const isTelegramContext =
+      typeof win.Telegram !== 'undefined' ||
+      typeof win.TelegramWebviewProxy !== 'undefined'
+
+    // 모바일 기기 자체를 감지해서 항상 경고 표시 (인앱 브라우저 감지 우회 대응)
+    const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+
+    setIsInAppBrowser(uaMatch || isTelegramContext || isMobileDevice)
   }, [])
 
   useEffect(() => {
@@ -132,13 +125,12 @@ export default function Home() {
               {step === 0 ? (
                 <div className="text-center space-y-6">
                   {isInAppBrowser && (
-                    <p className="text-xs text-red-800 px-4 py-3 border border-red-300 bg-red-50 rounded-2xl animate-pulse">
-                      ⚠️ 텔레그램, 인스타그램, 페이스북 등 일부 앱의 내부
-                      브라우저에서는 이미지가 정상적으로 다운로드되지 않을 수
-                      있습니다.
+                    <p className="text-xs text-red-800 px-4 py-3 border border-red-300 bg-red-50 rounded-2xl">
+                      ⚠️ 텔레그램, 인스타그램 등 앱의 내부 브라우저에서는
+                      사진 선택이나 다운로드가 제대로 동작하지 않을 수 있습니다.
                       <br />
-                      <strong>외부 브라우저</strong>(크롬, 사파리 등)에서{' '}
-                      <strong>다시</strong> 접속해주세요.
+                      <strong>크롬, 사파리 등 외부 브라우저</strong>에서 접속하시면
+                      더 안정적으로 이용할 수 있습니다.
                     </p>
                   )}
                   <div className="bg-white border border-[#F4A261] rounded-2xl px-6 py-8">

@@ -60,43 +60,43 @@ export default function Uploader({ onSelect, onClear }: Props) {
     const file = e.target.files?.[0]
     if (!file) return
 
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      const result = reader.result
-      if (typeof result !== 'string') return
+    // FileReader.readAsDataURL() 대신 blob URL 사용 — 메모리 사용량 대폭 절감
+    const objectUrl = URL.createObjectURL(file)
+    const img = document.createElement('img')
 
-      const img = document.createElement('img')
-      img.onload = () => {
-        const size = Math.min(img.width, img.height)
-        const sx = (img.width - size) / 2
-        const sy = (img.height - size) / 2
-        const outputSize = Math.min(size, MAX_SIZE)
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl)
 
-        const canvas = document.createElement('canvas')
-        canvas.width = outputSize
-        canvas.height = outputSize
-        const ctx = canvas.getContext('2d')
-        if (!ctx) return
+      const size = Math.min(img.width, img.height)
+      const sx = (img.width - size) / 2
+      const sy = (img.height - size) / 2
+      const outputSize = Math.min(size, MAX_SIZE)
 
-        ctx.drawImage(img, sx, sy, size, size, 0, 0, outputSize, outputSize)
+      const canvas = document.createElement('canvas')
+      canvas.width = outputSize
+      canvas.height = outputSize
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return
 
-        canvas.toBlob((blob) => {
-          if (!blob) return
+      ctx.drawImage(img, sx, sy, size, size, 0, 0, outputSize, outputSize)
 
-          const resizedFile = new File([blob], file.name, { type: file.type })
-          onSelect(resizedFile)
-          setUploadedFileName(file.name)
-          setCaptured(false)
-          setPhotoDataUrl(null)
-          setCameraError(false)
-          setUploadedPreview(canvas.toDataURL(file.type))
-        }, file.type)
-      }
+      const previewUrl = canvas.toDataURL('image/jpeg', 0.8)
 
-      img.src = result
+      canvas.toBlob((blob) => {
+        if (!blob) return
+
+        const resizedFile = new File([blob], file.name, { type: 'image/png' })
+        onSelect(resizedFile)
+        setUploadedFileName(file.name)
+        setCaptured(false)
+        setPhotoDataUrl(null)
+        setCameraError(false)
+        setUploadedPreview(previewUrl)
+      }, 'image/png')
     }
 
-    reader.readAsDataURL(file)
+    img.onerror = () => URL.revokeObjectURL(objectUrl)
+    img.src = objectUrl
     // 같은 파일 재선택 가능하도록 input 값 초기화
     e.target.value = ''
   }
