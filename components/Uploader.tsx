@@ -14,6 +14,7 @@ export default function Uploader({ onSelect, onClear }: Props) {
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null)
   const [uploadedPreview, setUploadedPreview] = useState<string | null>(null)
   const [cameraError, setCameraError] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
 
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -60,10 +61,15 @@ export default function Uploader({ onSelect, onClear }: Props) {
     const file = e.target.files?.[0]
     if (!file) return
 
+    setIsProcessing(true)
+
     const reader = new FileReader()
     reader.onloadend = () => {
       const result = reader.result
-      if (typeof result !== 'string') return
+      if (typeof result !== 'string') {
+        setIsProcessing(false)
+        return
+      }
 
       const img = document.createElement('img')
       img.onload = () => {
@@ -76,12 +82,18 @@ export default function Uploader({ onSelect, onClear }: Props) {
         canvas.width = outputSize
         canvas.height = outputSize
         const ctx = canvas.getContext('2d')
-        if (!ctx) return
+        if (!ctx) {
+          setIsProcessing(false)
+          return
+        }
 
         ctx.drawImage(img, sx, sy, size, size, 0, 0, outputSize, outputSize)
 
         canvas.toBlob((blob) => {
-          if (!blob) return
+          if (!blob) {
+            setIsProcessing(false)
+            return
+          }
 
           const resizedFile = new File([blob], file.name, { type: file.type })
           onSelect(resizedFile)
@@ -90,6 +102,7 @@ export default function Uploader({ onSelect, onClear }: Props) {
           setPhotoDataUrl(null)
           setCameraError(false)
           setUploadedPreview(canvas.toDataURL(file.type))
+          setIsProcessing(false)
         }, file.type)
       }
 
@@ -184,19 +197,22 @@ export default function Uploader({ onSelect, onClear }: Props) {
           <div className="mx-auto w-full text-center max-w-[360px] overflow-hidden bg-gray-50 border border-gray-200 rounded-2xl px-4 py-5">
             <label
               htmlFor="file-upload"
-              className={`cursor-pointer px-4 py-2 rounded-lg transition text-sm font-medium ${
-                uploadedFileName
-                  ? 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  : 'bg-[#FFE0B2] text-[#BD3108] hover:bg-[#FFD08A]'
+              className={`px-4 py-2 rounded-lg transition text-sm font-medium ${
+                isProcessing
+                  ? 'bg-gray-200 text-gray-400 cursor-wait'
+                  : uploadedFileName
+                    ? 'bg-gray-100 text-gray-700 hover:bg-gray-200 cursor-pointer'
+                    : 'bg-[#FFE0B2] text-[#BD3108] hover:bg-[#FFD08A] cursor-pointer'
               }`}
             >
-              {uploadedFileName ? '📂 다른 사진 선택' : '📁 앨범에서 사진 선택'}
+              {isProcessing ? '⏳ 이미지 처리 중...' : uploadedFileName ? '📂 다른 사진 선택' : '📁 앨범에서 사진 선택'}
             </label>
             <input
               id="file-upload"
               type="file"
               accept="image/*"
               onChange={handleUpload}
+              disabled={isProcessing}
               className="hidden"
             />
             <p className="mt-3 text-gray-500 text-xs text-center">

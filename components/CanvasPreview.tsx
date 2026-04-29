@@ -66,7 +66,6 @@ export default function CanvasPreview({
 
   const dragStartOffset = useRef({ x: 0, y: 0 })
   const longPressTimer = useRef<NodeJS.Timeout | null>(null)
-  const objectUrlRef = useRef<string | null>(null)
   const originalBodyOverflowY = useRef<string>('')
   const touchStartedOnAsset = useRef(false)
   const isSharingRef = useRef(false)
@@ -149,7 +148,6 @@ export default function CanvasPreview({
 
     if (image instanceof File) {
       currentObjectUrl = URL.createObjectURL(image)
-      objectUrlRef.current = currentObjectUrl
       baseImage.src = currentObjectUrl
     } else {
       ctx.clearRect(0, 0, canvas.width ?? 0, canvas.height ?? 0)
@@ -160,7 +158,6 @@ export default function CanvasPreview({
       cancelled = true
       if (currentObjectUrl) {
         URL.revokeObjectURL(currentObjectUrl)
-        objectUrlRef.current = null
       }
       if (longPressTimer.current) {
         clearTimeout(longPressTimer.current)
