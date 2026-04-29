@@ -171,7 +171,21 @@ export default function Home() {
                       시작하기
                     </button>
                   </div>
-
+                  
+{/* 예시 이미지 */}
+<div className="bg-white border border-[#F4A261] rounded-2xl px-6 py-5">
+  <p className="text-xs font-semibold text-[#BD3108] mb-3 text-center tracking-wide">
+    📸 완성 예시
+  </p>
+  <div className="relative w-full aspect-square max-w-[200px] mx-auto rounded-xl overflow-hidden border border-[#F4A261]">
+    <Image
+      src="/profile-example.jpg"
+      alt="프로필 꾸미기 예시"
+      fill
+      className="object-cover"
+    />
+  </div>
+</div>
                   <p className="text-xs text-slate-500 px-4 py-3 border border-slate-200 bg-slate-50 rounded-2xl">
                     🔒 이미지는 브라우저에서만 처리되며, 서버에{' '}
                     <strong className="text-slate-600">저장되지 않습니다.</strong>
