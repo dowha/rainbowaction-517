@@ -31,23 +31,21 @@ const ShareButton = ({ text, isSharing, onClick }: ShareButtonProps) => (
 )
 
 interface DownloadButtonProps {
-  downloadUrl: string
+  onClick: () => void
   isSharing: boolean
-  onDownload?: () => void
 }
 
-const DownloadButton = ({ downloadUrl, isSharing, onDownload }: DownloadButtonProps) => (
-  <a
-    href={downloadUrl}
-    download="IDAHOBIT-profile.png"
-    onClick={onDownload}
+const DownloadButton = ({ onClick, isSharing }: DownloadButtonProps) => (
+  <button
+    type="button"
+    onClick={onClick}
+    disabled={isSharing}
     className={`block no-underline hover:no-underline w-full text-center px-4 py-2.5 text-sm text-white bg-gray-800 rounded-lg hover:bg-gray-700 hover:text-white transition border border-gray-800 ${
-      isSharing ? 'opacity-60 pointer-events-none' : 'cursor-pointer'
+      isSharing ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'
     }`}
-    aria-disabled={isSharing}
   >
     <strong>이미지 다운로드</strong>
-  </a>
+  </button>
 )
 
 export default function CanvasPreview({
@@ -71,6 +69,7 @@ export default function CanvasPreview({
   const objectUrlRef = useRef<string | null>(null)
   const originalBodyOverflowY = useRef<string>('')
   const touchStartedOnAsset = useRef(false)
+  const isSharingRef = useRef(false)
 
   const isMobile = useMemo(
     () => typeof window !== 'undefined' && /Mobi|Android/i.test(navigator.userAgent),
@@ -342,18 +341,19 @@ export default function CanvasPreview({
       alert('이미지를 생성 중이거나 오류가 발생했습니다.')
       return
     }
-
     if (!navigator.share) {
       alert('이 브라우저/기기에서는 공유 기능을 지원하지 않습니다. 이미지를 다운로드하여 공유해주세요.')
       return
     }
+    // ref로 중복 실행 차단 (상태 변경 없이)
+    if (isSharingRef.current) return
+    isSharingRef.current = true
 
-    setIsSharing(true)
-
+    // 모든 준비를 navigator.share() 호출 전에 동기적으로 완료
     const blob = dataURLtoBlob(downloadUrl)
     if (!blob) {
       alert('이미지 변환 중 오류가 발생했습니다.')
-      setIsSharing(false)
+      isSharingRef.current = false
       return
     }
 
@@ -366,15 +366,19 @@ export default function CanvasPreview({
       url: shareUrl,
     }
 
+    if (navigator.canShare && !navigator.canShare(shareData)) {
+      alert('이 이미지 파일은 공유할 수 없습니다. 다운로드 후 직접 공유해주세요.')
+      isSharingRef.current = false
+      return
+    }
+
+    // user gesture 컨텍스트 유지: 상태 변경 없이 바로 share() 호출
+    const sharePromise = navigator.share(shareData)
+    // share() 호출 이후에만 UI 상태 업데이트
+    setIsSharing(true)
+
     try {
-      if (navigator.canShare && navigator.canShare(shareData)) {
-        await navigator.share(shareData)
-      } else if (!navigator.canShare) {
-        await navigator.share(shareData)
-      } else {
-        alert('이 이미지 파일은 공유할 수 없습니다. 다운로드 후 직접 공유해주세요.')
-        return
-      }
+      await sharePromise
 
       await supabase.from('image_creations').insert({
         asset: overlay,
@@ -388,9 +392,23 @@ export default function CanvasPreview({
         alert(`공유 중 오류가 발생했습니다: ${error.message}`)
       }
     } finally {
+      isSharingRef.current = false
       setIsSharing(false)
     }
   }, [downloadUrl, overlay, dataURLtoBlob])
+
+  const handleDownload = useCallback(() => {
+    if (!downloadUrl) return
+    const blob = dataURLtoBlob(downloadUrl)
+    if (!blob) return
+    const blobUrl = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = blobUrl
+    a.download = 'IDAHOBIT-profile.png'
+    a.click()
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000)
+    onDownload?.()
+  }, [downloadUrl, dataURLtoBlob, onDownload])
 
   const platformInfo = useMemo(() => {
     if (typeof window === 'undefined' || typeof navigator === 'undefined') {
@@ -553,7 +571,7 @@ export default function CanvasPreview({
 
             {platformInfo.isPC && (
               <>
-                <DownloadButton downloadUrl={downloadUrl} isSharing={isSharing} onDownload={onDownload} />
+                <DownloadButton onClick={handleDownload} isSharing={isSharing} />
                 {platformInfo.canShare && <ShareButton text="공유하기" isSharing={isSharing} onClick={handleNativeShare} />}
               </>
             )}
@@ -561,7 +579,7 @@ export default function CanvasPreview({
             {platformInfo.isIOS && (
               <>
                 {platformInfo.canShare && <ShareButton text="공유하기(사진첩 저장하기)" isSharing={isSharing} onClick={handleNativeShare} />}
-                <DownloadButton downloadUrl={downloadUrl} isSharing={isSharing} onDownload={onDownload} />
+                <DownloadButton onClick={handleDownload} isSharing={isSharing} />
                 <p className="text-xs text-center text-gray-500 mt-3">
                   일부 앱 내 브라우저에서는 다운로드 또는 공유가 제한될 수 있어요.
                   <br />
@@ -581,7 +599,7 @@ export default function CanvasPreview({
             {platformInfo.isAndroid && (
               <>
                 {platformInfo.canShare && <ShareButton text="공유하기(이미지 복사하기)" isSharing={isSharing} onClick={handleNativeShare} />}
-                <DownloadButton downloadUrl={downloadUrl} isSharing={isSharing} onDownload={onDownload} />
+                <DownloadButton onClick={handleDownload} isSharing={isSharing} />
                 <p className="text-xs text-center text-gray-500 mt-3">
                   일부 앱 내 브라우저에서는 다운로드가 제한될 수 있어요.
                   <br />
